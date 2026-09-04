@@ -8,7 +8,19 @@ Not enter/leave choreography. Not a transition queue. Not `position: sticky` ins
 
 ## Install
 
-From a local checkout of this repo:
+Claude Code:
+
+```bash
+git clone https://github.com/KanchanaSW/scrollytelling-skill ~/.claude/skills/scrollytelling-data
+```
+
+Cursor:
+
+```bash
+git clone https://github.com/KanchanaSW/scrollytelling-skill ~/.cursor/skills/scrollytelling-data
+```
+
+Or, from a local checkout, symlink into both runtimes:
 
 ```bash
 chmod +x scripts/install.sh
@@ -19,13 +31,6 @@ That links:
 
 - `~/.cursor/skills/scrollytelling-data` — Cursor
 - `~/.claude/skills/scrollytelling-data` — Claude Code
-
-Or clone straight into a skills directory:
-
-```bash
-git clone <this-repo> ~/.claude/skills/scrollytelling-data
-ln -sfn ~/.claude/skills/scrollytelling-data ~/.cursor/skills/scrollytelling-data
-```
 
 ## What's in the box
 
@@ -47,4 +52,35 @@ The graphic stays on screen (ScrollTrigger pin, not sticky-inside-transform). St
 
 ## After install
 
-Restart Cursor / start a new Claude Code session so the skill description is in the catalog. Ask to scaffold a data scrolly; the agent should read `SKILL.md` then `references/camera.md` before writing scroll or chart code.
+Restart Cursor / start a new Claude Code session so the skill description is in the catalog. Then, in any project, paste a prompt like this:
+
+```
+Use the scrollytelling-data skill. Scaffold a data scrollytelling article:
+one pinned chart, scrolling steps, morphing headline numbers.
+Claim: [one sentence]. Dataset: [URL or file]. Beats: [ordered list of full chart views].
+```
+
+The agent should read `SKILL.md` then `references/camera.md` before writing scroll or chart code.
+
+### Sample command
+
+```
+Use scrollytelling-data. Build a data scrolly: pinned stacked-bar of US electricity generation, 6 steps from the 2000 mix → coal peak → gas rise → wind/solar, headline morphing on renewables share. Data from EIA. Vite + React + Lenis + GSAP pin.
+```
+
+Cursor: `@scrollytelling-data` then the same prompt. Claude Code: `/scrollytelling-data` or just the prompt after install.
+
+### Sample ideas
+
+Any of these work if you keep **one graphic on screen** and let scroll pick the snapshot:
+
+| Idea | Chart | What the steps do |
+|---|---|---|
+| What actually grew | stacked bars, energy mix | whole mix → emphasize coal → land on solar |
+| Who owns streaming | stacked area, subscriber share | 2015 pile → Netflix peak → Disney/YouTube split |
+| The rent gap | dual line, median rent vs wage | both rise → wage stalls → gap at latest year |
+| Cars that aren't cars | line, EV vs ICE sales | ICE plateau → EV takeoff → one market's crossover |
+| Where the tax dollar goes | stacked bar, city budget | total → public safety slice → leftover for housing |
+| Heat, not weather | bars, decade temperature anomaly | 1970s baseline → each decade → last decade highlighted |
+
+A beat is a **full chart view** (marks, highlight, domain, headline number), not `{ add: 'coal' }`. If the story needs filters, a dashboard, or a horizontal résumé camera, this is the wrong skill.
